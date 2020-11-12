@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Work+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+body {
+  margin: 0;
+  padding: 25px;
+  font-family: 'Work Sans', sans-serif;
+}
+
+h1, h2, h3, button {
+  font-family: 'Lobster', cursive;
+}
