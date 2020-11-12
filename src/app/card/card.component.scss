@@ -1,6 +1,6 @@
 .card {
-  width: 150px;
-  height: 200px;
+  width: 80px;
+  height: 120px;
   display: flex;
   flex-direction: column;
   border: 1px solid black;
@@ -28,7 +28,8 @@
 
   img {
     align-self: center;
-    width: 70px;
-    height: 70px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid red;
   }
 }

@@ -1,3 +1,24 @@
+.rules {
+  max-width: 800px;
+
+  p {
+    text-align: justify;
+  }
+}
+
 .bankCards, .playerCards {
   display: flex;
+}
+
+.gameplay {
+  display: flex;
+  flex-direction: column;
+
+  .playerCards, .bankCards {
+    flex-wrap: wrap;
+  }
+
+  .bank, .player {
+    width: 50%;
+  }
 }
