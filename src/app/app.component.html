@@ -4,9 +4,9 @@
   <h2>&nbsp; &#9829; &#9824; &#9827; &#9830;</h2>
 </header>
 
-<app-button (click)="toggleShowRules()">Ein-/Ausblenden</app-button>
+<app-button (click)="toggleShowRules()">Spielregeln</app-button>
 
-<div class="rules" *ngIf="showRules">
+<div class="rules" *ngIf="game.showRules">
   <h2>Spielregeln</h2>
 
   <p>
@@ -19,45 +19,72 @@
 <br>
 <br>
 
+
+<app-button (click)="startGame()" [disabled]="game.gameStarted">Start</app-button>
+
+<br>
+<br>
+
+<app-button (click)="nextCardForPlayer()"
+            [disabled]=" !game.gameStarted || game.playerWon || game.bankWon || game.playersPoints === 21 || game.playersTurnFinished">Neue Karte
+</app-button>
+
+<app-button (click)="playerFinishedTurn()"
+            [disabled]=" !game.gameStarted || game.playerWon || game.bankWon || game.playersPoints === 21 || game.playersTurnFinished">Zug beenden
+</app-button>
+
 <div class="winner">
-  <h1 *ngIf="bankWon">Bank gewinnt!</h1>
-  <h1 *ngIf="playerWon">Spieler gewinnt!</h1>
+  <h1 *ngIf="game.bankWon || (game.bankPoints === 21)">Bank gewinnt!</h1>
+  <h1 *ngIf="game.playerWon || (game.playersPoints === 21)">Spieler gewinnt!</h1>
 </div>
 
 <br>
 <br>
 
-<app-button (click)="startGame()" [disabled]="gameStarted">Start</app-button>
-
 <div class="gameplay">
 
-  <h2>Bank: </h2>
+  <div class="bank">
 
-  <div *ngIf="playersTurnFinished">
-    <p>Punkte: {{bankValue}}</p>
+    <h2>Bank: </h2>
 
-    <div class="bankCards">
-      <div *ngFor="let bankCard of bankCards">
-        {{bankCard.entity}}
-        {{bankCard.value}}
+      <p>
+        <ng-container  *ngIf="game.revealBankCard">
+          Punkte: {{game.bankPoints}}
+        </ng-container>
+        &nbsp;
+      </p>
+
+      <div class="bankCards">
+
+        <div *ngFor="let bankCard of game.bankCards">
+          <app-hidden-card *ngIf="!game.revealBankCard"></app-hidden-card>
+          <app-card *ngIf="game.revealBankCard" [card]="bankCard"></app-card>
+        </div>
+
+        <app-hidden-card *ngIf="game.showBanksHiddenCard"></app-hidden-card>
       </div>
+
+    </div>
+
+
+  <div class="player">
+
+    <h2>Spieler: </h2>
+
+    <p *ngIf="game.gameStarted && game.revealPlayerCard">Punkte: {{game.playersPoints}}</p>
+
+    <div class="playerCards">
+
+      <div *ngFor="let playerCard of game.playerCards">
+        <app-hidden-card *ngIf="!game.revealPlayerCard"></app-hidden-card>
+        <app-card *ngIf="game.revealPlayerCard" [card]="playerCard"></app-card>
+      </div>
+
+      <app-hidden-card *ngIf="game.showPlayersHiddenCard"></app-hidden-card>
+
     </div>
 
   </div>
-
-  <h2>Spieler: </h2>
-
-  <p>Punkte: {{playersValue}}</p>
-
-  <div class="playerCards">
-    <div *ngFor="let playerCard of playerCards">
-      {{playerCard.entity}}
-      {{playerCard.value}}
-    </div>
-  </div>
-
-  <app-button (click)="nextCardForPlayer()" [disabled]="playersTurnFinished || playersValue > 21">Neue Karte</app-button>
-  <app-button (click)="playerFinishedTurn()" [disabled]="playersTurnFinished || playersValue > 21">Zug beenden</app-button>
 
 </div>
 
