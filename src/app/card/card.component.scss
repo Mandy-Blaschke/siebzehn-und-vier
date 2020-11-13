@@ -8,6 +8,8 @@
   padding: 10px;
   border-radius: 8px;
   box-shadow: 2px 2px 5px #2b2828;
+  font-family: 'Lobster', cursive;
+  background-color: white;
 
   .head, .foot {
     display: flex;
@@ -26,10 +28,12 @@
     margin-top: auto;
   }
 
-  img {
+  .middle {
     align-self: center;
-    width: 40px;
-    height: 40px;
-    border: 1px solid red;
+
+    h1 {
+      text-align: center;
+      margin: 0;
+    }
   }
 }

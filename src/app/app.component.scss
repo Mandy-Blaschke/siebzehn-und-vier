@@ -1,24 +1,80 @@
-.rules {
-  max-width: 800px;
-
-  p {
-    text-align: justify;
-  }
-}
-
-.bankCards, .playerCards {
-  display: flex;
-}
-
-.gameplay {
+.content {
   display: flex;
   flex-direction: column;
+  width: 90%;
+  margin: 0 auto;
+  align-items: center;
 
-  .playerCards, .bankCards {
-    flex-wrap: wrap;
+  header {
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    justify-content: center;
+    font-size: 1.5rem;
+
+    .red {
+      color: red;
+    }
   }
 
-  .bank, .player {
-    width: 50%;
+  .rules {
+    box-shadow: 0 0 20px #2b2828;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 25px 0;
+
+    p {
+      text-align: justify;
+    }
   }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+
+    .row {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .winner {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  .bankCards, .playerCards {
+    display: flex;
+  }
+
+  .gameplay {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row-reverse;
+    width: 90%;
+    padding: 25px;
+    background-color: green;
+    border-radius: 140px;
+    border: 15px solid #4a2206;
+
+    .playerCards, .bankCards {
+      flex-wrap: wrap;
+    }
+
+    .bank, .player {
+      width: 50%;
+      height: 300px;
+
+      h2 {
+        text-align: center;
+        color: white;
+        text-shadow: 2px 2px 2px black;
+      }
+    }
+
+    .player {
+      border-right: 1px solid #ffffff;
+    }
+  }
+
 }

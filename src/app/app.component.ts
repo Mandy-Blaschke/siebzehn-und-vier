@@ -125,9 +125,9 @@ export class AppComponent implements OnInit {
       this.game.playersTurnFinished && (
         this.game.bankPoints === 21 ||
         this.game.bankPoints < 21 && this.game.playersPoints > 21 ||
-        (this.game.bankPoints < 21) && (this.game.playersPoints < 21) && (21 - this.game.bankPoints < 21 - this.game.playersPoints) ||
-        this.game.playersTurnFinished && this.game.playersPoints > 21 && this.game.bankPoints < 21
-      )
+        (this.game.bankPoints < 21) && (this.game.playersPoints < 21) && (21 - this.game.bankPoints < 21 - this.game.playersPoints)) ||
+        this.game.playersPoints > 21 && this.game.bankPoints < 21
+
     ) {
       this.game.bankWon = true;
       await this.endRound();

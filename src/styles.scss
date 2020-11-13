@@ -6,6 +6,8 @@ body {
   margin: 0;
   padding: 25px;
   font-family: 'Work Sans', sans-serif;
+  user-select: none;
+  background-color: antiquewhite;
 }
 
 h1, h2, h3, button {
