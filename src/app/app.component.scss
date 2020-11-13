@@ -50,9 +50,15 @@ main {
   .winner {
     text-align: center;
     font-size: 1.5rem;
+    margin-right: 10%;
+
+    @media (max-width: 1121px) {
+      margin-right: 0;
+    }
 
     h1 {
       margin: 25px;
+      animation: glowing 4s ease-in-out infinite;
     }
   }
 
@@ -141,6 +147,21 @@ main {
       }
     }
   }
+}
 
+@keyframes glowing {
+  0% {
+    color: white;
+    text-shadow: 2px 2px 3px darkred;
+  }
+
+  50% {
+    color: black;
+    text-shadow: 2px 2px 30px #ff0303;
+  }
+  100% {
+    color: white;
+    text-shadow: 2px 2px 3px darkred;
+  }
 
 }
