@@ -1,0 +1,19 @@
+header {
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  justify-content: center;
+  font-size: 1.5rem;
+
+  @media (max-width: 1200px){
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 390px){
+    font-size: 1rem;
+  }
+
+  .red {
+    color: red;
+  }
+}

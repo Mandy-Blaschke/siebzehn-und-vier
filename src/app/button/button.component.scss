@@ -9,6 +9,10 @@ button {
   box-shadow: 2px 2px 2px #2b2828;
   font-size: 1.2rem;
 
+  @media (max-width: 1200px) {
+    font-size: 1rem;
+  }
+
   &:active {
     background-color: #2b2828;
     color: white;
