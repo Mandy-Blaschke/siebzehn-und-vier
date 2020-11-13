@@ -17,4 +17,12 @@ body {
 
 h1, h2, h3, button {
   font-family: 'Lobster', cursive;
+
+  @media (max-width: 1200px){
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 390px){
+    font-size: 1rem;
+  }
 }
