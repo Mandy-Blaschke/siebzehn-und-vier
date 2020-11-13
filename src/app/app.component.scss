@@ -1,7 +1,6 @@
-.content {
+main {
   display: flex;
   flex-direction: column;
-  width: 90%;
   margin: 0 auto;
   align-items: center;
 
@@ -11,10 +10,15 @@
     width: 100%;
     justify-content: center;
     font-size: 1.5rem;
+    margin-right: 10%;
 
     .red {
       color: red;
     }
+  }
+
+  .rules-button {
+    margin-right: 10%;
   }
 
   .rules {
@@ -22,59 +26,79 @@
     padding: 20px;
     border-radius: 8px;
     margin: 25px 0;
+    background-color: white;
+
+    h2 {
+      text-align: center;
+      color: #2b2828;
+      text-shadow: 0.5px 0.5px 0 red;
+      margin-right: 10%;
+    }
 
     p {
       text-align: justify;
-    }
-  }
 
-  .buttons {
-    display: flex;
-    flex-direction: column;
-
-    .row {
-      display: flex;
-      justify-content: center;
+    &.important {
+      text-indent: 25px;
+        color: #b31616;
+      }
     }
   }
 
   .winner {
     text-align: center;
     font-size: 1.5rem;
-  }
+    margin-right: 10%;
 
-  .bankCards, .playerCards {
-    display: flex;
-  }
-
-  .gameplay {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row-reverse;
-    width: 90%;
-    padding: 25px;
-    background-color: green;
-    border-radius: 140px;
-    border: 15px solid #4a2206;
-
-    .playerCards, .bankCards {
-      flex-wrap: wrap;
+    h1 {
+      margin: 25px;
     }
+  }
 
-    .bank, .player {
-      width: 50%;
-      height: 300px;
 
-      h2 {
-        text-align: center;
-        color: white;
-        text-shadow: 2px 2px 2px black;
+  .content {
+    display: flex;
+    width: 100%;
+
+    .left-content {
+      width: 90%;
+
+      .gameplay {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row-reverse;
+        width: 100%;
+        min-height: 500px;
+        padding: 25px;
+        background-color: green;
+        border-radius: 140px;
+        border: 15px solid #4a2206;
+
+        .bankCards, .playerCards {
+          display: flex;
+          flex-wrap: wrap;
+        }
+
+        .bank, .player {
+          width: 50%;
+
+          h2 {
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 2px black;
+          }
+        }
+
+        .player {
+          border-right: 1px solid #ffffff;
+        }
       }
     }
 
-    .player {
-      border-right: 1px solid #ffffff;
+    .right-content {
+      width: 10%;
     }
   }
+
 
 }

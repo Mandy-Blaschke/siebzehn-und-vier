@@ -8,7 +8,6 @@ import {sleep} from './util';
 })
 export class AppComponent implements OnInit {
 
-
   game: GameState;
 
   ngOnInit(): void {
@@ -90,10 +89,6 @@ export class AppComponent implements OnInit {
     this.game.showPlayersHiddenCard = false;
     this.game.playerCards.push(this.pickRandomCardFromCurrentDeck());
     this.getPoints();
-    if (this.game.playersPoints >= 21) {
-      await sleep(1200);
-      await this.checkForWinner();
-    }
   }
 
   async playerFinishedTurn(): Promise<void> {
@@ -114,20 +109,48 @@ export class AppComponent implements OnInit {
     this.getPoints();
 
     if (
-      this.game.playersPoints === 21 && this.game.bankPoints !== 21 ||
-      this.game.playersTurnFinished && this.game.bankPoints > 21 && this.game.playersPoints < 21 ||
-      this.game.playersTurnFinished && (this.game.bankPoints < 21) && (this.game.playersPoints < 21)
-      && (21 - this.game.bankPoints > 21 - this.game.playersPoints)
+      this.game.playersTurnFinished === true &&
+      (
+        this.game.playerCards[0].type === 'A'
+        && this.game.playerCards[1].type === 'A'
+        && this.game.bankCards[0].type !== 'A'
+        && this.game.bankCards[1].type !== 'A'
+        ||
+
+        this.game.playersPoints === 21 && this.game.bankPoints !== 21
+        ||
+
+        this.game.bankPoints > 21 && this.game.playersPoints < 21
+        ||
+
+        (this.game.bankPoints < 21) && (this.game.playersPoints < 21)
+        && (21 - this.game.bankPoints) > (21 - this.game.playersPoints)
+      )
     ) {
       this.game.playerWon = true;
       await this.endRound();
-    } else if (
-      this.game.playersTurnFinished && (
-        this.game.bankPoints === 21 ||
-        this.game.bankPoints < 21 && this.game.playersPoints > 21 ||
-        (this.game.bankPoints < 21) && (this.game.playersPoints < 21) && (21 - this.game.bankPoints < 21 - this.game.playersPoints)) ||
-        this.game.playersPoints > 21 && this.game.bankPoints < 21
 
+    } else if (this.game.playersTurnFinished &&
+      (
+        this.game.bankCards[0].type === 'A'
+        && this.game.bankCards[1].type === 'A'
+        ||
+
+        this.game.bankPoints === this.game.playersPoints
+        ||
+
+        this.game.bankPoints === 21
+        ||
+
+        (this.game.bankPoints < 21) && (this.game.playersPoints < 21)
+        && (21 - this.game.bankPoints < 21 - this.game.playersPoints)
+        ||
+
+        this.game.playersPoints > 21 && this.game.bankPoints < 21
+        ||
+
+        this.game.playersPoints === 21 && this.game.bankPoints === 21
+      )
     ) {
       this.game.bankWon = true;
       await this.endRound();
@@ -177,61 +200,61 @@ interface GameState {
 }
 
 const CARDS: Card[] = [
-  {suit: 'heart', value: 11, type: 'A', imgUrl: '', entity: '♥', color: 'red'},
-  {suit: 'heart', value: 10, type: 'K', imgUrl: '', entity: '♥', color: 'red'},
-  {suit: 'heart', value: 10, type: 'Q', imgUrl: '', entity: '♥', color: 'red'},
-  {suit: 'heart', value: 10, type: 'J', imgUrl: '', entity: '♥', color: 'red'},
-  {suit: 'heart', value: 10, type: '10', imgUrl: '', entity: '♥', color: 'red'},
-  {suit: 'heart', value: 9, type: '9', imgUrl: '', entity: '♥', color: 'red'},
-  {suit: 'heart', value: 8, type: '8', imgUrl: '', entity: '♥', color: 'red'},
-  {suit: 'heart', value: 7, type: '7', imgUrl: '', entity: '♥', color: 'red'},
-  {suit: 'heart', value: 6, type: '6', imgUrl: '', entity: '♥', color: 'red'},
-  {suit: 'heart', value: 5, type: '5', imgUrl: '', entity: '♥', color: 'red'},
-  {suit: 'heart', value: 4, type: '4', imgUrl: '', entity: '♥', color: 'red'},
-  {suit: 'heart', value: 3, type: '3', imgUrl: '', entity: '♥', color: 'red'},
-  {suit: 'heart', value: 2, type: '2', imgUrl: '', entity: '♥', color: 'red'},
+  {suit: 'heart', value: 11, type: 'A', entity: '♥', color: 'red'},
+  {suit: 'heart', value: 10, type: 'K', entity: '♥', color: 'red'},
+  {suit: 'heart', value: 10, type: 'Q', entity: '♥', color: 'red'},
+  {suit: 'heart', value: 10, type: 'J', entity: '♥', color: 'red'},
+  {suit: 'heart', value: 10, type: '10', entity: '♥', color: 'red'},
+  {suit: 'heart', value: 9, type: '9', entity: '♥', color: 'red'},
+  {suit: 'heart', value: 8, type: '8', entity: '♥', color: 'red'},
+  {suit: 'heart', value: 7, type: '7', entity: '♥', color: 'red'},
+  {suit: 'heart', value: 6, type: '6', entity: '♥', color: 'red'},
+  {suit: 'heart', value: 5, type: '5', entity: '♥', color: 'red'},
+  {suit: 'heart', value: 4, type: '4', entity: '♥', color: 'red'},
+  {suit: 'heart', value: 3, type: '3', entity: '♥', color: 'red'},
+  {suit: 'heart', value: 2, type: '2', entity: '♥', color: 'red'},
 
-  {suit: 'spades', value: 11, type: 'A', imgUrl: '', entity: '♠', color: 'black'},
-  {suit: 'spades', value: 10, type: 'K', imgUrl: '', entity: '♠', color: 'black'},
-  {suit: 'spades', value: 10, type: 'Q', imgUrl: '', entity: '♠', color: 'black'},
-  {suit: 'spades', value: 10, type: 'J', imgUrl: '', entity: '♠', color: 'black'},
-  {suit: 'spades', value: 10, type: '10', imgUrl: '', entity: '♠', color: 'black'},
-  {suit: 'spades', value: 9, type: '9', imgUrl: '', entity: '♠', color: 'black'},
-  {suit: 'spades', value: 8, type: '8', imgUrl: '', entity: '♠', color: 'black'},
-  {suit: 'spades', value: 7, type: '7', imgUrl: '', entity: '♠', color: 'black'},
-  {suit: 'spades', value: 6, type: '6', imgUrl: '', entity: '♠', color: 'black'},
-  {suit: 'spades', value: 5, type: '5', imgUrl: '', entity: '♠', color: 'black'},
-  {suit: 'spades', value: 4, type: '4', imgUrl: '', entity: '♠', color: 'black'},
-  {suit: 'spades', value: 3, type: '3', imgUrl: '', entity: '♠', color: 'black'},
-  {suit: 'spades', value: 2, type: '2', imgUrl: '', entity: '♠', color: 'black'},
+  {suit: 'spades', value: 11, type: 'A', entity: '♠', color: 'black'},
+  {suit: 'spades', value: 10, type: 'K', entity: '♠', color: 'black'},
+  {suit: 'spades', value: 10, type: 'Q', entity: '♠', color: 'black'},
+  {suit: 'spades', value: 10, type: 'J', entity: '♠', color: 'black'},
+  {suit: 'spades', value: 10, type: '10', entity: '♠', color: 'black'},
+  {suit: 'spades', value: 9, type: '9', entity: '♠', color: 'black'},
+  {suit: 'spades', value: 8, type: '8', entity: '♠', color: 'black'},
+  {suit: 'spades', value: 7, type: '7', entity: '♠', color: 'black'},
+  {suit: 'spades', value: 6, type: '6', entity: '♠', color: 'black'},
+  {suit: 'spades', value: 5, type: '5', entity: '♠', color: 'black'},
+  {suit: 'spades', value: 4, type: '4', entity: '♠', color: 'black'},
+  {suit: 'spades', value: 3, type: '3', entity: '♠', color: 'black'},
+  {suit: 'spades', value: 2, type: '2', entity: '♠', color: 'black'},
 
-  {suit: 'cross', value: 11, type: 'A', imgUrl: '', entity: '♣', color: 'black'},
-  {suit: 'cross', value: 10, type: 'K', imgUrl: '', entity: '♣', color: 'black'},
-  {suit: 'cross', value: 10, type: 'Q', imgUrl: '', entity: '♣', color: 'black'},
-  {suit: 'cross', value: 10, type: 'J', imgUrl: '', entity: '♣', color: 'black'},
-  {suit: 'cross', value: 10, type: '10', imgUrl: '', entity: '♣', color: 'black'},
-  {suit: 'cross', value: 9, type: '9', imgUrl: '', entity: '♣', color: 'black'},
-  {suit: 'cross', value: 8, type: '8', imgUrl: '', entity: '♣', color: 'black'},
-  {suit: 'cross', value: 7, type: '7', imgUrl: '', entity: '♣', color: 'black'},
-  {suit: 'cross', value: 6, type: '6', imgUrl: '', entity: '♣', color: 'black'},
-  {suit: 'cross', value: 5, type: '5', imgUrl: '', entity: '♣', color: 'black'},
-  {suit: 'cross', value: 4, type: '4', imgUrl: '', entity: '♣', color: 'black'},
-  {suit: 'cross', value: 3, type: '3', imgUrl: '', entity: '♣', color: 'black'},
-  {suit: 'cross', value: 2, type: '2', imgUrl: '', entity: '♣', color: 'black'},
+  {suit: 'cross', value: 11, type: 'A', entity: '♣', color: 'black'},
+  {suit: 'cross', value: 10, type: 'K', entity: '♣', color: 'black'},
+  {suit: 'cross', value: 10, type: 'Q', entity: '♣', color: 'black'},
+  {suit: 'cross', value: 10, type: 'J', entity: '♣', color: 'black'},
+  {suit: 'cross', value: 10, type: '10', entity: '♣', color: 'black'},
+  {suit: 'cross', value: 9, type: '9', entity: '♣', color: 'black'},
+  {suit: 'cross', value: 8, type: '8', entity: '♣', color: 'black'},
+  {suit: 'cross', value: 7, type: '7', entity: '♣', color: 'black'},
+  {suit: 'cross', value: 6, type: '6', entity: '♣', color: 'black'},
+  {suit: 'cross', value: 5, type: '5', entity: '♣', color: 'black'},
+  {suit: 'cross', value: 4, type: '4', entity: '♣', color: 'black'},
+  {suit: 'cross', value: 3, type: '3', entity: '♣', color: 'black'},
+  {suit: 'cross', value: 2, type: '2', entity: '♣', color: 'black'},
 
-  {suit: 'plaid', value: 11, type: 'A', imgUrl: '', entity: '♦', color: 'red'},
-  {suit: 'plaid', value: 10, type: 'K', imgUrl: '', entity: '♦', color: 'red'},
-  {suit: 'plaid', value: 10, type: 'Q', imgUrl: '', entity: '♦', color: 'red'},
-  {suit: 'plaid', value: 10, type: 'J', imgUrl: '', entity: '♦', color: 'red'},
-  {suit: 'plaid', value: 10, type: '10', imgUrl: '', entity: '♦', color: 'red'},
-  {suit: 'plaid', value: 9, type: '9', imgUrl: '', entity: '♦', color: 'red'},
-  {suit: 'plaid', value: 8, type: '8', imgUrl: '', entity: '♦', color: 'red'},
-  {suit: 'plaid', value: 7, type: '7', imgUrl: '', entity: '♦', color: 'red'},
-  {suit: 'plaid', value: 6, type: '6', imgUrl: '', entity: '♦', color: 'red'},
-  {suit: 'plaid', value: 5, type: '5', imgUrl: '', entity: '♦', color: 'red'},
-  {suit: 'plaid', value: 4, type: '4', imgUrl: '', entity: '♦', color: 'red'},
-  {suit: 'plaid', value: 3, type: '3', imgUrl: '', entity: '♦', color: 'red'},
-  {suit: 'plaid', value: 2, type: '2', imgUrl: '', entity: '♦', color: 'red'},
+  {suit: 'plaid', value: 11, type: 'A', entity: '♦', color: 'red'},
+  {suit: 'plaid', value: 10, type: 'K', entity: '♦', color: 'red'},
+  {suit: 'plaid', value: 10, type: 'Q', entity: '♦', color: 'red'},
+  {suit: 'plaid', value: 10, type: 'J', entity: '♦', color: 'red'},
+  {suit: 'plaid', value: 10, type: '10', entity: '♦', color: 'red'},
+  {suit: 'plaid', value: 9, type: '9', entity: '♦', color: 'red'},
+  {suit: 'plaid', value: 8, type: '8', entity: '♦', color: 'red'},
+  {suit: 'plaid', value: 7, type: '7', entity: '♦', color: 'red'},
+  {suit: 'plaid', value: 6, type: '6', entity: '♦', color: 'red'},
+  {suit: 'plaid', value: 5, type: '5', entity: '♦', color: 'red'},
+  {suit: 'plaid', value: 4, type: '4', entity: '♦', color: 'red'},
+  {suit: 'plaid', value: 3, type: '3', entity: '♦', color: 'red'},
+  {suit: 'plaid', value: 2, type: '2', entity: '♦', color: 'red'},
 ];
 
 

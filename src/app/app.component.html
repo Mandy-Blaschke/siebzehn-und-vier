@@ -1,4 +1,4 @@
-<div class="content">
+<main>
 
   <header>
     <h1>&#9827;</h1>
@@ -14,110 +14,119 @@
     <h1>&#9827;</h1>
   </header>
 
-  <app-button (click)="toggleShowRules()">Spielregeln</app-button>
+  <app-button (click)="toggleShowRules()" class="rules-button">Spielregeln</app-button>
 
   <div class="rules" *ngIf="game.showRules">
     <h2>Spielregeln</h2>
 
     <p>
       Ziel des Spiels ist genau 21 (17+4) Punkte erreichen.
-      <br>
-      <br>
+    </p>
+    <p>
       Gespielt wird mit 52 Karten.
       Die Wertung der Karten entspricht den aufgedruckten Werten.
       Bei Bildkarten ist der Wert jeweils 10.
-      Das Ass gilt <b>immer</b> als 11 Punkte.
-      <br>
-      <br>
+    </p>
+    <p class="important">
+      <b>Das Ass gilt immer als 11 Punkte.</b>
+    </p>
+    <p>
       Zu Beginn werden dem Spieler zwei Karten ausgeteilt, der Bank eine Karte.
       Der Spieler entscheidet nun, ob er die Bank mit den ihm ausgeteilten Karten
       bereits besiegen kann.
-      <br>
-      <br>
+    </p>
+    <p>
       Wenn er meint ausreichend Punkte zu haben, wird der Zug beendet.
       Andernfalls kann er sich dazu entscheiden, eine weitere Karte zu ziehen.
       Die geschieht solange, bis er entweder keine Karten möchte oder der Gesamtwert
       21 überschreitet.
-      <br>
-      <br>
+    </p>
+    <p>
       Wird der Gesamtwert überschritten ist das Spiel verloren und die Bank gewinnt.
-      <br>
-      <br>
+    </p>
+    <p>
       Beschließt der Spieler zuvor seinen Zug zu beenden, ist die Bank an der Reihe.
       Diese deckt nun ihre anfangs ausgeteilte Karte auf und entscheidet ebenfalls, ob
       eine weitere Karte gezogen wird.
-      <br>
-      <br>
-      Erreicht die Bank den Wert 21 hat der Spieler in jedem Fall verloren -
-      ein Unentschieden gibt es nicht.
+    </p>
+    <p>
+      Erreicht die Bank den Wert 21 hat der Spieler in jedem Fall verloren.
+    </p>
+    <p  class="important">
+      <b>Ein Unentschieden gibt es nicht.</b>
+    </p>
+    <p>
       Die Bank verliert, wenn Spieler und Bank unter 21 liegen und der Spieler einen
       höheren Wert hat oder der Spieler zuvor 21 Punkte erreicht hat.
-
     </p>
   </div>
 
-  <div class="buttons">
-    <div class="row">
-      <app-button (click)="startGame()" [disabled]="game.gameStarted">Start</app-button>
-
-      <app-button (click)="nextCardForPlayer()"
-                  [disabled]=" !game.gameStarted || game.playerWon || game.bankWon || game.playersPoints === 21 || game.playersTurnFinished">
-        Neue Karte
-      </app-button>
-      <app-button (click)="playerFinishedTurn()"
-                  [disabled]=" !game.gameStarted || game.playerWon || game.bankWon || game.playersPoints === 21 || game.playersTurnFinished">
-        Zug beenden
-      </app-button>
-
-    </div>
-
-  </div>
-
   <div class="winner">
-    <h1 *ngIf="game.bankWon">
+    <h1 *ngIf="game.bankWon && game.roundFinished">
       Bank gewinnt!
     </h1>
 
-    <h1 *ngIf="game.playerWon">
+    <h1 *ngIf="game.playerWon && game.roundFinished">
       Spieler gewinnt!
     </h1>
-  </div>
 
     <app-button *ngIf="game.roundFinished" (click)="resetGameState(); startGame()">
-      Neues Spiel?
+      Neue Runde?
     </app-button>
+  </div>
 
-  <div class="gameplay">
 
-    <div class="bank">
+  <div class="content">
 
-      <h2>Bank: </h2>
+    <div class="left-content">
+      <div class="gameplay">
 
-      <div class="bankCards">
-
-        <div *ngFor="let bankCard of game.bankCards">
-          <app-hidden-card *ngIf="!game.revealBankCard"></app-hidden-card>
-          <app-card *ngIf="game.revealBankCard" [card]="bankCard"></app-card>
+        <div class="bank">
+          <h2>Bank: </h2>
+          <div class="bankCards">
+            <div *ngFor="let bankCard of game.bankCards">
+              <app-hidden-card *ngIf="!game.revealBankCard"></app-hidden-card>
+              <app-card *ngIf="game.revealBankCard" [card]="bankCard"></app-card>
+            </div>
+            <app-hidden-card *ngIf="game.showBanksHiddenCard"></app-hidden-card>
+          </div>
         </div>
 
-        <app-hidden-card *ngIf="game.showBanksHiddenCard"></app-hidden-card>
+
+        <div class="player">
+          <h2>Spieler: </h2>
+          <div class="playerCards">
+            <div *ngFor="let playerCard of game.playerCards">
+              <app-hidden-card *ngIf="!game.revealPlayerCard"></app-hidden-card>
+              <app-card *ngIf="game.revealPlayerCard" [card]="playerCard"
+                        [ngStyle]="{color:playerCard.color}"></app-card>
+            </div>
+            <app-hidden-card *ngIf="game.showPlayersHiddenCard"></app-hidden-card>
+          </div>
+        </div>
+
       </div>
 
     </div>
 
+    <div class="right-content">
 
-    <div class="player">
+      <div class="buttons">
 
-      <h2>Spieler: </h2>
+        <app-button (click)="startGame()" [disabled]="game.gameStarted" [startButton]="true"
+                    [startetGame]="game.gameStarted">
+          Start
+        </app-button>
 
-      <div class="playerCards">
+        <app-button (click)="nextCardForPlayer()"
+                    [disabled]=" !game.gameStarted || game.playerWon || game.bankWon || game.playersTurnFinished">
+          Neue Karte
+        </app-button>
 
-        <div *ngFor="let playerCard of game.playerCards">
-          <app-hidden-card *ngIf="!game.revealPlayerCard"></app-hidden-card>
-          <app-card *ngIf="game.revealPlayerCard" [card]="playerCard" [ngStyle]="{color:playerCard.color}"></app-card>
-        </div>
-
-        <app-hidden-card *ngIf="game.showPlayersHiddenCard"></app-hidden-card>
+        <app-button (click)="playerFinishedTurn()"
+                    [disabled]=" !game.gameStarted || game.playerWon || game.bankWon || game.playersTurnFinished">
+          Zug beenden
+        </app-button>
 
       </div>
 
@@ -125,4 +134,5 @@
 
   </div>
 
-</div>
+
+</main>
