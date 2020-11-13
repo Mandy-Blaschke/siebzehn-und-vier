@@ -8,6 +8,11 @@ body {
   font-family: 'Work Sans', sans-serif;
   user-select: none;
   background-color: antiquewhite;
+
+
+  @media (max-height: 700px) {
+    zoom: 0.8;
+  }
 }
 
 h1, h2, h3, button {

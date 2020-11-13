@@ -5,10 +5,18 @@ main {
 
   app-header {
     margin-right: 10%;
+
+    @media (max-width: 1121px){
+      margin-right: 0;
+    }
   }
 
   .rules-button {
     margin-right: 10%;
+
+    @media (max-width: 1121px){
+      margin-right: 0;
+    }
   }
 
   .rules {
@@ -20,9 +28,13 @@ main {
 
     h2 {
       text-align: center;
-      margin-right: 10%;
+      margin-right: 12%;
       color: #2b2828;
       text-shadow: 0.5px 0.5px 0 red;
+
+      @media (max-width: 1121px) {
+        margin-right: 0;
+      }
     }
 
     p {
@@ -50,8 +62,17 @@ main {
     justify-content: center;
     width: 82%;
 
+    @media (max-width: 1121px){
+      flex-direction: column-reverse;
+      align-items: center;
+    }
+
     .left-content {
-      width: 85%;
+      width: 80%;
+
+      @media (max-width: 1121px){
+        width: 100%;
+      }
 
       .gameplay {
         box-sizing: border-box;
@@ -61,12 +82,12 @@ main {
         min-height: 500px;
         padding: 30px;
         background-color: green;
-        border-radius: 140px;
+        border-radius: 50px;
         border: 15px solid #4a2206;
 
         @media (max-width: 900px) {
           flex-direction: column;
-          padding: 0 40px;
+          padding: 5px 20px;
         }
 
         .bankCards, .playerCards {
@@ -94,7 +115,8 @@ main {
           border-right: 1px solid #ffffff;
 
           @media (max-width: 900px) {
-            border: none;
+            border-right: none;
+            border-top: 1px solid #ffffff;
           }
         }
       }
@@ -103,10 +125,19 @@ main {
     .right-content {
       width: 15%;
 
+      @media (max-width: 1121px){
+        width: 80%;
+      }
+
       .buttons {
         display: flex;
         flex-direction: column;
         align-items: center;
+
+        @media (max-width: 1121px){
+          flex-direction: row;
+          justify-content: space-evenly;
+        }
       }
     }
   }
